@@ -11,7 +11,7 @@ var Link = require('../app/models/link');
 // NOTE: these tests are designed for mongo!
 /////////////////////////////////////////////////////
 
-xdescribe('', function() {
+describe('', function() {
 
   beforeEach(function(done) {
     // Log out currently signed in user
@@ -118,11 +118,14 @@ xdescribe('', function() {
       });
 
       it('Shortcode redirects to correct url', function(done) {
+        link.initialize();
         var sha = link.code;
+        console.log(sha, 'sha=============================');
         request(app)
           .get('/' + sha)
           .expect(302)
           .expect(function(res) {
+            console.log(res.headers, ' res headers in shortcode++++++++++++++++++++');
             var redirect = res.headers.location;
             expect(redirect).to.equal('http://www.roflzoo.com/');
           })
